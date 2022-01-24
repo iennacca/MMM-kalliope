@@ -22,6 +22,7 @@ module.exports = NodeHelper.create({
                 if (req.body.payload){
                     payload = req.body.payload
                     console.log(payload)
+		    console.log("[" + this.name + "] Jerry was here")
                     if (this.isJsonString(payload)){
                         payload = JSON.parse(req.body.payload);
                     }

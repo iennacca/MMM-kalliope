@@ -53,7 +53,7 @@ Module.register('MMM-kalliope',{
     },
 
     // Override dom generator
-	getDom: function() {
+    getDom: function() {
         var wrapper = document.createElement("div");
 
         if (this.messages.length  == 0){
