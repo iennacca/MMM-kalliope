@@ -84,6 +84,7 @@ Module.register('MMM-kalliope',{
 
     socketNotificationReceived: function(notification, payload) {
         // console.log(this.name + " received a socket notification: " + notification + " - Payload: " + payload);
+        console.log("[" + this.name + notification +"][MMM-SOCKET][JC] Payload : " + payload);
         if (notification == "KALLIOPE"){
             // create new message object
             var newMessage = new Message(payload);
@@ -98,8 +99,6 @@ Module.register('MMM-kalliope',{
             // forward the notification to all modules
             this.sendNotification(notification, payload);
         }
-
-
     },
 
     notificationReceived: function(notification, payload, sender) {
