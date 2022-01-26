@@ -20,12 +20,13 @@ module.exports = NodeHelper.create({
         this.expressApp.post('/kalliope', (req, res) => {
             if (req.body.notification){
                 if (req.body.payload){
-                    payload = req.body.payload
-                    console.log(payload)
-		    console.log("[" + this.name + "] Jerry was here")
+
+                    payload = req.body.payload;
                     if (this.isJsonString(payload)){
                         payload = JSON.parse(req.body.payload);
                     }
+		            console.log("[" + this.name + req.body.notification +"][NODESTART][JC] Payload : " + payload);
+
                     this.sendSocketNotification(req.body.notification, payload);
                     res.send({"status": "success"});
                 }else{
@@ -38,8 +39,7 @@ module.exports = NodeHelper.create({
     },
 
     socketNotificationReceived: function(notification, payload) {
-		console.log(this.name + " received a socket notification: " + notification + " - Payload: " + payload);
-
+        console.log("[" + this.name + notification +"][NODESOCKET][JC] Payload : " + payload);
     },
 
     isJsonString: function(str) {
