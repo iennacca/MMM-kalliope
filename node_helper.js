@@ -7,12 +7,16 @@
 const NodeHelper = require("node_helper");
 const bodyParser = require('body-parser');
 
-
+var _log = function() {
+    var context = "[NODE-KALLIOPE]"
+    return Function.prototype.bind.call(console.log, console, context)
+}()
+  
 module.exports = NodeHelper.create({
 
     start: function() {
 
-        console.log(this.name + ' is started');
+        _log('Starting');
 
         this.expressApp.use(bodyParser.json()); // support json encoded bodies
         this.expressApp.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
@@ -25,7 +29,6 @@ module.exports = NodeHelper.create({
                     if (this.isJsonString(payload)){
                         payload = JSON.parse(req.body.payload);
                     }
-		            console.log("[" + this.name + req.body.notification +"][NODESTART][JC] Payload : " + payload);
 
                     this.sendSocketNotification(req.body.notification, payload);
                     res.send({"status": "success"});
@@ -39,7 +42,7 @@ module.exports = NodeHelper.create({
     },
 
     socketNotificationReceived: function(notification, payload) {
-        console.log("[" + this.name + notification +"][NODESOCKET][JC] Payload : " + payload);
+        _log(notification + "|" + payload);
     },
 
     isJsonString: function(str) {

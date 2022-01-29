@@ -1,5 +1,10 @@
 /* global Module */
 
+var _log = function() {
+    var context = "[MMM-KALLIOPE]"
+    return Function.prototype.bind.call(console.log, console, context)
+}()
+  
 class Message {
     constructor(text) {
         this.text = text;
@@ -19,10 +24,9 @@ Module.register('MMM-kalliope',{
     },
 
     start: function() {
+        _log('Starting');
         // need to connect to the node helper
         this.sendSocketNotification("CONNECT", null);
-
-        console.log("Starting module: " + this.name);
 
         //Update DOM every minute so that the time of the call updates and calls get removed after a certain time
 		setInterval(() => {
@@ -84,7 +88,7 @@ Module.register('MMM-kalliope',{
 
     socketNotificationReceived: function(notification, payload) {
         // console.log(this.name + " received a socket notification: " + notification + " - Payload: " + payload);
-        console.log("[" + this.name + notification +"][MMM-SOCKET][JC] Payload : " + payload);
+        _log("socketNotificationReceived: " + notification + "|" + payload);
         if (notification == "KALLIOPE"){
             // create new message object
             var newMessage = new Message(payload);
@@ -102,6 +106,7 @@ Module.register('MMM-kalliope',{
     },
 
     notificationReceived: function(notification, payload, sender) {
+        _log("notificationReceived: " + notification + "|" + payload + "|" + sender);
         if (sender) {
             console.log(this.name + " received a module notification: " + notification
             + " from sender: " + sender.name);
